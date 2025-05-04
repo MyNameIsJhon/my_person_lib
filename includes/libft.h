@@ -6,7 +6,7 @@
 /*   By: jriga <jriga@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:38:23 by jriga             #+#    #+#             */
-/*   Updated: 2025/04/29 15:47:07 by jriga            ###   ########.fr       */
+/*   Updated: 2025/05/04 17:25:44 by jriga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ typedef struct s_list
     t_type      type;
     struct s_list *next;
 }           t_list;
+
+typedef struct s_header 
+{
+	size_t size;
+}			t_header;
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -99,5 +104,8 @@ int		ft_nbrlen(int nb);
 int		ft_hexlen(unsigned int n);
 int		ft_hexlen_l(unsigned long n);
 int		ft_nbrlen_u(unsigned int nb);
+void	*ft_malloc(size_t size);
+void	ft_free(void *ptr);
+size_t	ft_sizeof(void *ptr);
 
 #endif
