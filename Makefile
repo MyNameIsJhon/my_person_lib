@@ -13,9 +13,11 @@ INCLUDES    := -Iincludes
 LIB_DIR     := libft
 PRINTF_DIR  := ft_printf
 ARENA_DIR	:= arena_allocator
+FILE_DIR	:= fileft
 OBJ_DIR     := obj
 
-SRC         := $(wildcard $(LIB_DIR)/*.c) $(wildcard $(PRINTF_DIR)/*.c) $(wildcard $(ARENA_DIR)/*.c)
+SRC         := $(wildcard $(LIB_DIR)/*.c) $(wildcard $(PRINTF_DIR)/*.c) $(wildcard $(ARENA_DIR)/*.c) $(wildcard $(FILE_DIR)/*.c)
+
 OBJ         := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # === COLORS / ICONS ===
