@@ -9,9 +9,10 @@
 /*   Updated: 2025/04/12 17:30:42 by jriga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "fileft.h"
-#include <fcntl.h>
 #include "libft.h"
+#include <fcntl.h>
 
 static char	*append_line(char *line, char *buf, char *nl)
 {
@@ -57,14 +58,12 @@ static void	shift_buffer(char *buf)
 	buf[j] = '\0';
 }
 
-char	*get_next_line(int fd)
+static ssize_t	read_line(int fd, char *buf, char **line)
 {
-	static char	buf[BUFFER_SIZE + 1];
-	char		*nl;
-	char		*line;
-	ssize_t		bytes;
+	ssize_t	bytes;
+	char	*nl;
 
-	line = NULL;
+	bytes = 1;
 	while (1)
 	{
 		nl = ft_strchr(buf, '\n');
@@ -76,26 +75,35 @@ char	*get_next_line(int fd)
 			buf[bytes] = '\0';
 			nl = ft_strchr(buf, '\n');
 		}
-		line = append_line(line, buf, nl);
+		*line = append_line(*line, buf, nl);
 		shift_buffer(buf);
 		if (nl)
 			break ;
 	}
-	return (line);
+	return (bytes);
 }
 
-/* #include <stdio.h> */
-/* int main(void) */
-/* { */
-/* 	char fd; */
-/* 	char *get; */
-/**/
-/* 	fd = open("./README.md", O_RDONLY); */
-/**/
-/* 	for(int i = 3; i < 3 ; i++) */
-/* 	{ */
-/* 		get = get_next_line(fd); */
-/* 		printf("%s", get); */
-/* 		free(get); */
-/* 	} */
-/* } */
+char	*get_next_line(int fd)
+{
+	static char	buf[FD_MAX][BUFFER_SIZE + 1];
+	char		*line;
+	ssize_t		bytes;
+
+	line = NULL;
+	if (fd < 0 || fd >= FD_MAX || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+		return (NULL);
+	if (buf[fd][0] != '\0' && !ft_strchr(buf[fd], '\n'))
+	{
+		line = append_line(line, buf[fd], NULL);
+		buf[fd][0] = '\0';
+	}
+	bytes = read_line(fd, buf[fd], &line);
+	if (bytes <= 0)
+	{
+		if (!line)
+			return (NULL);
+		buf[fd][0] = '\0';
+		return (line);
+	}
+	return (line);
+}
