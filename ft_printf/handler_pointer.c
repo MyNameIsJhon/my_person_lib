@@ -20,8 +20,8 @@ int	handler_pointer(va_list *ap)
 	ptr = va_arg(*ap, void *);
 	if (!ptr)
 	{
-		ft_putstr("0x0");
-		return (3);
+		ft_putstr("(nil)");
+		return (5);
 	}
 	ft_putstr("0x");
 	ft_putnbr_hex_ulong((unsigned long)ptr, 'x');

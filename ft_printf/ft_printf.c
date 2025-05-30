@@ -6,7 +6,7 @@
 /*   By: jriga <jriga@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 23:22:50 by jriga             #+#    #+#             */
-/*   Updated: 2025/05/01 15:19:16 by jriga            ###   ########.fr       */
+/*   Updated: 2025/05/01 15:49:39 by jriga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	print_next_to(char **str, char *charset)
 		return (diff);
 	}
 	diff = cp - *str;
-	write(1, *str, diff); 
+	write(1, *str, diff);
 	*str = cp;
 	return (diff);
 }
@@ -54,7 +54,6 @@ int	ft_printf(const char *str, ...)
 	int			(*handler_func[N_SPECS + 2])(va_list *ap);
 	char		p_ask[N_SPECS + 2];
 	char		*ptr;
-	ptrdiff_t	diff;
 	int			len;
 
 	va_start(elements, str);
@@ -64,14 +63,13 @@ int	ft_printf(const char *str, ...)
 	{
 		len += print_next_to((char **)&str, "%");
 		if (!str || !*str)
-			break;
+			break ;
 		str++;
 		ptr = ft_strchr(p_ask, *str);
 		if (ptr)
 		{
-			diff = ptr - p_ask;
-			len += handler_func[diff](&elements);
-			str++; // déplace ici seulement en cas de spec valide
+			len += handler_func[ptr - p_ask](&elements);
+			str++;
 		}
 	}
 	va_end(elements);

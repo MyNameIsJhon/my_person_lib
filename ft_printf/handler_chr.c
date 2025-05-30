@@ -19,5 +19,5 @@ int	handler_chr(va_list *ap)
 
 	c = (char)va_arg(*ap, int);
 	ft_putchar(c);
-	return 1;
+	return (1);
 }

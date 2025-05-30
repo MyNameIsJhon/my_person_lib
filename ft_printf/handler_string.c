@@ -21,7 +21,7 @@ int	handler_string(va_list *ap)
 	if (!str)
 	{
 		ft_putstr("(null)");
-		return (0);
+		return (6);
 	}
 	else
 		ft_putstr(str);
